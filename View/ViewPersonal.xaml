@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Module07Data_Access.ViewModel"
+             x:Class="Module07Data_Access.View.ViewPersonal"
+             Title="View Personal"
+             BackgroundColor="#004D40">
+    <!-- Light blue background -->
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Employees List"
+                   FontSize="24"
+                   HorizontalOptions="Center"
+                   TextColor="#E0F7FA" />
+            <!-- Teal color -->
+
+            <ListView ItemsSource="{Binding PersonalList}" SelectedItem="{Binding SelectedPersonal}" BackgroundColor="#E0F7FA">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="10" BackgroundColor="#FFFFFF" Margin="5" CornerRadius="10" HasShadow="True">
+                                <StackLayout>
+                                    <Label Text="{Binding Name}" FontSize="Medium" TextColor="#00796B" />
+                                    <!-- Teal -->
+                                    <Label Text="{Binding Gender}" FontSize="Small" TextColor="#004D40" />
+                                    <!-- Darker teal -->
+                                    <Label Text="{Binding ContactNo}" FontSize="Small" TextColor="#004D40" />
+                                </StackLayout>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:PersonalViewModel}}, Path=SelectedPersonCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="Load Data" Command="{Binding LoadDataCommand}"
+                    BackgroundColor="#4DB6AC" TextColor="White" CornerRadius="5" />
+            <!-- Medium teal -->
+
+            <Label Text="Add New Person" FontSize="20" TextColor="#E0F7FA" />
+
+            <Entry Placeholder="Name" Text="{Binding NewPersonalName}" Margin="0,0,0,10"/>
+            <Entry Placeholder="Gender" Text="{Binding NewPersonalGender}" Margin="0,0,0,10"/>
+            <Entry Placeholder="ContactNo" Text="{Binding NewPersonalContactNo}" Margin="0,0,0,10"/>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+                <Button Text="Add Person" Command="{Binding AddPersonalCommand}"
+                        BackgroundColor="#4DB6AC" TextColor="White" CornerRadius="5"/>
+                <Button Text="Delete Person" Command="{Binding DeletePersonCommand}" 
+                        IsEnabled="{Binding IsPersonSelected}"
+                        BackgroundColor="#00796B" TextColor="White" CornerRadius="5"/>
+                <!-- Teal -->
+            </StackLayout>
+
+            <Label x:Name="ConnectionStatusLabel"
+                   Text="{Binding StatusMessage}"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   TextColor="#004D40" />
+            <!-- Darker teal -->
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
